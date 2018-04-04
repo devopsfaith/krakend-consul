@@ -8,11 +8,14 @@ import (
 	"github.com/hashicorp/consul/api"
 )
 
-func Register(ctx context.Context, e config.ExtraConfig, port int) error {
+func Register(ctx context.Context, e config.ExtraConfig, port int, serviceName string) error {
 	cfg, err := parse(e, port)
 	if err != nil {
 		return err
 	}
+
+	cfg.Name = serviceName
+
 	return register(ctx, cfg)
 }
 
@@ -25,7 +28,6 @@ func register(ctx context.Context, cfg Config) error {
 	}
 
 	service := &api.AgentServiceRegistration{
-		//ID:   cfg.Name + time.Now().String(),
 		Name: cfg.Name,
 		Port: cfg.Port,
 		Tags: cfg.Tags,
