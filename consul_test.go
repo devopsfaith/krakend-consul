@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/devopsfaith/krakend/config"
+	"github.com/devopsfaith/krakend-gologging"
 )
 
 func TestRegister_ok(t *testing.T) {
@@ -14,23 +15,34 @@ func TestRegister_ok(t *testing.T) {
 	extraCfg := config.ExtraConfig{
 		Namespace: map[string]interface{}{
 			"address": "127.0.0.1:8500",
-			"name":    "test",
 			"tags": []interface{}{
 				"1224", "2233",
 			},
 		},
 	}
 
-	err := Register(ctx, extraCfg, 111)
+	logger, err := gologging.NewLogger(config.ExtraConfig{
+		gologging.Namespace: map[string]interface{}{
+			"level":  "DEBUG",
+			"stdout": true,
+		},
+	})
+	if err != nil {
+		t.Error(err.Error())
+		return
+	}
+
+	err = Register(ctx, extraCfg, 111, "test", logger)
 	if err != nil {
 		t.Errorf("error %s", err.Error())
 		return
 	}
 
-	fmt.Println("registered")
+	fmt.Println("test registered", )
 
-	<-time.After(30 * time.Second)
+	<-time.After(10 * time.Second)
 	cancel()
-	fmt.Println("deregistered")
+	<-time.After(10 * time.Second)
+	fmt.Println("test deregistered")
 
 }

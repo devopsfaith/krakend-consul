@@ -2,13 +2,14 @@ package consul
 
 import (
 	"context"
-
 	"github.com/devopsfaith/krakend/config"
 	"github.com/devopsfaith/krakend/sd/dnssrv"
 	"github.com/hashicorp/consul/api"
+	"github.com/devopsfaith/krakend/logging"
+	"github.com/go-contrib/uuid"
 )
 
-func Register(ctx context.Context, e config.ExtraConfig, port int, serviceName string) error {
+func Register(ctx context.Context, e config.ExtraConfig, port int, serviceName string, logger logging.Logger) error {
 	cfg, err := parse(e, port)
 	if err != nil {
 		return err
@@ -16,10 +17,10 @@ func Register(ctx context.Context, e config.ExtraConfig, port int, serviceName s
 
 	cfg.Name = serviceName
 
-	return register(ctx, cfg)
+	return register(ctx, cfg, logger)
 }
 
-func register(ctx context.Context, cfg Config) error {
+func register(ctx context.Context, cfg Config, logger logging.Logger) error {
 	consulConfig := api.DefaultConfig()
 	consulConfig.Address = cfg.Address
 	c, err := api.NewClient(consulConfig)
@@ -31,6 +32,7 @@ func register(ctx context.Context, cfg Config) error {
 		Name: cfg.Name,
 		Port: cfg.Port,
 		Tags: cfg.Tags,
+		ID: uuid.NewV1().String(),
 	}
 
 	if err := c.Agent().ServiceRegister(service); err != nil {
@@ -39,7 +41,10 @@ func register(ctx context.Context, cfg Config) error {
 
 	go func() {
 		<-ctx.Done()
-		c.Agent().ServiceDeregister(service.ID)
+
+		if err := c.Agent().ServiceDeregister(service.ID); err != nil {
+			logger.Info("error when trying to deregister service", service.ID, ":", err)
+		}
 	}()
 
 	return dnssrv.Register()
