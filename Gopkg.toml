@@ -1,0 +1,24 @@
+[[constraint]]
+  name = "github.com/devopsfaith/krakend"
+  version = "0.4.2"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/devopsfaith/krakend-gologging"
+
+[[constraint]]
+  name = "github.com/go-contrib/uuid"
+  version = "1.2.0"
+
+[[constraint]]
+  name = "github.com/hashicorp/consul"
+  version = "1.0.6"
+
+[[override]]
+  name = "github.com/op/go-logging"
+  revision = "970db520ece77730c7e4724c61121037378659d9"
+
+[prune]
+  non-go = true
+  go-tests = true
+  unused-packages = true
