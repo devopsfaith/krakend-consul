@@ -2,6 +2,7 @@
 
 
 [[projects]]
+  branch = "master"
   name = "github.com/devopsfaith/krakend"
   packages = [
     "config",
@@ -10,8 +11,7 @@
     "sd",
     "sd/dnssrv"
   ]
-  revision = "f7f27225f65abd50ae1ef168970649f8fab3fbf3"
-  version = "0.4.2"
+  revision = "8a537322117aa287ae3f09f9ba49f78ce5132c1b"
 
 [[projects]]
   branch = "master"
@@ -63,6 +63,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "91f6ab9b080cf0ecc83e4964e1e153b61494813f29ab4346ebfd115e4a1c95c1"
+  inputs-digest = "90e31214262bc0324184f80d2252ef76ea45aba1f8ad02dc723b9031504a2d4f"
   solver-name = "gps-cdcl"
   solver-version = 1
