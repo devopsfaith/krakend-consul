@@ -2,11 +2,12 @@ package consul
 
 import (
 	"context"
+
 	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/sd/dnssrv"
-	"github.com/hashicorp/consul/api"
 	"github.com/devopsfaith/krakend/logging"
+	"github.com/devopsfaith/krakend/sd/dnssrv"
 	"github.com/go-contrib/uuid"
+	"github.com/hashicorp/consul/api"
 )
 
 func Register(ctx context.Context, e config.ExtraConfig, port int, serviceName string, logger logging.Logger) error {
@@ -32,7 +33,7 @@ func register(ctx context.Context, cfg Config, logger logging.Logger) error {
 		Name: cfg.Name,
 		Port: cfg.Port,
 		Tags: cfg.Tags,
-		ID: uuid.NewV1().String(),
+		ID:   uuid.NewV1().String(),
 	}
 
 	if err := c.Agent().ServiceRegister(service); err != nil {
