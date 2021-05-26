@@ -3,7 +3,7 @@ package consul
 import (
 	"fmt"
 
-	"github.com/devopsfaith/krakend/config"
+	"github.com/luraproject/lura/config"
 )
 
 type Config struct {

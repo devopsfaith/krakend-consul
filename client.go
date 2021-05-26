@@ -3,11 +3,11 @@ package consul
 import (
 	"context"
 
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend/logging"
-	"github.com/devopsfaith/krakend/sd/dnssrv"
 	"github.com/go-contrib/uuid"
 	"github.com/hashicorp/consul/api"
+	"github.com/luraproject/lura/config"
+	"github.com/luraproject/lura/logging"
+	"github.com/luraproject/lura/sd/dnssrv"
 )
 
 func Register(ctx context.Context, e config.ExtraConfig, port int, serviceName string, logger logging.Logger) error {
