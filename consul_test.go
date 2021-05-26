@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/devopsfaith/krakend/config"
-	"github.com/devopsfaith/krakend-gologging"
+	gologging "github.com/devopsfaith/krakend-gologging"
+	"github.com/luraproject/lura/config"
 )
 
 func TestRegister_ok(t *testing.T) {
@@ -38,7 +38,7 @@ func TestRegister_ok(t *testing.T) {
 		return
 	}
 
-	fmt.Println("test registered", )
+	fmt.Println("test registered")
 
 	<-time.After(10 * time.Second)
 	cancel()
